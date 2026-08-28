@@ -5,6 +5,7 @@ const archiveBtn = document.getElementById('archiveBtn');
 const addEquipmentBtn = document.getElementById('addEquipmentBtn');
 const contentArea = document.getElementById('content-area');
 const mapDiv = document.getElementById('map');
+const practicalsGrid = document.getElementById('practicalsGrid');
 const addEquipmentModal = document.getElementById('addEquipmentModal');
 const closeAddEquipmentModal = document.getElementById('closeAddEquipmentModal');
 const addEquipmentForm = document.getElementById('addEquipmentForm');
@@ -1215,6 +1216,8 @@ let archivedEquipment = [];
 
 function showContent(title, html) {
     contentArea.innerHTML = `<h2>${title}</h2>${html}`;
+    practicalsGrid.style.display = 'none';
+    practicalsGrid.innerHTML = '';
 }
 
 let isNavigatingBack = false;
@@ -1307,7 +1310,7 @@ function renderState(state) {
 }
 
 function showWelcome() {
-    showContent('Welcome to the Laboratory Inventory', `<p>Select an area on the map to explore.</p>`);
+    showContent('Science Equipment Map', `<p>Select an area on the map to explore.</p>`);
     mapDiv.style.display = 'grid';
     navigationStack = [{ type: 'map' }];
     backBtn.disabled = true;
@@ -1792,11 +1795,21 @@ function handleDynamicClick(event) {
     const nestedShelfButton = target.closest('.nested-shelf-button-js');
     const shelfButton = target.closest('.shelf-button-js');
     const shelfCategoryButton = target.closest('.shelf-category-js');
-    const mapCell = target.closest('.map-cell');
+    const mapCell = target.closest('#map .map-cell');
+    const practicalsGridCell = target.closest('.practicals-grid-cell');
     const locationButton = target.closest('.practical-location-btn');
 
     if (mapCell) {
         handleAreaSelection(mapCell.dataset.area);
+    } else if (practicalsGridCell) {
+        const action = practicalsGridCell.dataset.practicalsAction;
+        if (action === 'subject') {
+            showPracticalsSubject(practicalsGridCell.dataset.subarea);
+        } else if (action === 'level') {
+            showPracticalsLevel(practicalsGridCell.dataset.subarea, practicalsGridCell.dataset.shelf);
+        } else if (action === 'topic') {
+            showPracticalsTopic(practicalsGridCell.dataset.parent, practicalsGridCell.dataset.subarea || null, practicalsGridCell.dataset.nestedshelf);
+        }
     } else if (locationButton) {
         const nav = JSON.parse(locationButton.dataset.nav);
         if (nav.type === 'cabinet') {
@@ -2062,15 +2075,30 @@ function sortPracticals(list) {
     });
 }
 
+function populatePracticalsGrid(cells) {
+    practicalsGrid.innerHTML = '';
+    cells.forEach(cell => {
+        const el = document.createElement('div');
+        el.className = 'map-cell practicals-grid-cell';
+        el.dataset.parent = cell.parent;
+        if (cell.subarea !== undefined) el.dataset.subarea = cell.subarea;
+        if (cell.shelf !== undefined) el.dataset.shelf = cell.shelf;
+        if (cell.nestedshelf !== undefined) el.dataset.nestedshelf = cell.nestedshelf;
+        el.dataset.practicalsAction = cell.action;
+        el.textContent = cell.label;
+        practicalsGrid.appendChild(el);
+    });
+    practicalsGrid.style.display = 'grid';
+}
+
 function showPracticalsHome() {
     pushState({ type: 'practicals-home' });
-    let html = '<h3>Subject</h3><div class="cabinet-buttons">';
-    PRACTICALS_SUBJECTS.forEach(subject => {
+    showContent('Practicals', '<p>Choose a subject below.</p>');
+    const cells = PRACTICALS_SUBJECTS.map(subject => {
         const count = allPracticals.filter(t => t.subject === subject).length;
-        html += `<button class="subarea-button-js" data-parent="Practicals" data-subarea="${subject}">${subject} (${count})</button>`;
+        return { action: 'subject', parent: 'Practicals', subarea: subject, label: `${subject} (${count})` };
     });
-    html += '</div>';
-    showContent('Practicals', html);
+    populatePracticalsGrid(cells);
     attachDynamicEventListeners();
 }
 
@@ -2081,15 +2109,15 @@ function showPracticalsSubject(subject) {
         showPracticalsLevel(subject, null);
         return;
     }
-    let html = `<h3>${subject} - Level</h3><div class="cabinet-buttons">`;
+    showContent(`Practicals - ${subject}`, '<p>Choose a level below.</p>');
+    const cells = [];
     levels.forEach(level => {
         const count = allPracticals.filter(t => t.subject === subject && t.level === level).length;
         if (count > 0) {
-            html += `<button class="shelf-button-js" data-parent="Practicals" data-subarea="${subject}" data-shelf="${level}">${level} (${count})</button>`;
+            cells.push({ action: 'level', parent: 'Practicals', subarea: subject, shelf: level, label: `${level} (${count})` });
         }
     });
-    html += '</div>';
-    showContent(`Practicals - ${subject}`, html);
+    populatePracticalsGrid(cells);
     attachDynamicEventListeners();
 }
 
@@ -2098,14 +2126,13 @@ function showPracticalsLevel(subject, level) {
     const matches = allPracticals.filter(t => t.subject === subject && t.level === level);
     const hasTopics = (level && TOPIC_LEVELS.includes(level)) || matches.some(t => t.topic);
     if (hasTopics) {
+        showContent(`Practicals - ${subject}` + (level ? ` - ${level}` : ''), '<p>Choose a topic below.</p>');
         const topics = [...new Set(matches.map(t => t.topic || 'General'))].sort();
-        let html = `<h3>${level || subject} - Topic</h3><div class="cabinet-buttons">`;
-        topics.forEach(topic => {
+        const cells = topics.map(topic => {
             const count = matches.filter(t => (t.topic || 'General') === topic).length;
-            html += `<button class="nested-shelf-button-js" data-parent="${subject}" data-subarea="${level || ''}" data-nestedshelf="${topic}">${topic} (${count})</button>`;
+            return { action: 'topic', parent: subject, subarea: level || '', nestedshelf: topic, label: `${topic} (${count})` };
         });
-        html += '</div>';
-        showContent(`Practicals - ${subject}` + (level ? ` - ${level}` : ''), html);
+        populatePracticalsGrid(cells);
         attachDynamicEventListeners();
     } else {
         renderPracticalsListHTML(subject, level, null, matches);
