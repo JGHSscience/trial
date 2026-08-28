@@ -1064,30 +1064,32 @@ body.theme-gecko ::-webkit-scrollbar-track {
 
 body.theme-barbie {
   --color-bg: #ffe6f2;
-  --color-surface: rgba(255, 255, 255, 0.68);
-  --color-surface-strong: rgba(255, 255, 255, 0.9);
+  --color-surface: rgba(255, 105, 180, 0.22);
+  --color-surface-strong: rgba(255, 192, 221, 0.6);
   --color-primary: #ff1493;
-  --color-primary-dark: #d6006f;
-  --color-primary-light: rgba(255, 182, 213, 0.55);
-  --color-accent: #ffb100;
+  --color-primary-dark: #c2005f;
+  --color-primary-light: rgba(255, 105, 180, 0.35);
+  --color-accent: #ffd23f;
   --color-danger: #ff4d6d;
   --color-danger-dark: #c9184a;
   --color-success: #00c2a8;
   --color-success-dark: #00998a;
   --color-text: #7a1750;
-  --color-text-muted: #b5637f;
-  --color-border: rgba(255, 255, 255, 0.75);
-  --shadow: 0 8px 32px rgba(255, 20, 147, 0.22);
-  --shadow-lg: 0 20px 60px rgba(255, 20, 147, 0.32);
+  --color-text-muted: #c25b96;
+  --color-border: rgba(255, 255, 255, 0.8);
+  --radius: 28px;
+  --radius-pill: 999px;
+  --shadow: 0 8px 32px rgba(255, 20, 147, 0.3);
+  --shadow-lg: 0 20px 60px rgba(255, 20, 147, 0.4);
 
-  background: linear-gradient(135deg, #ffd1e8 0%, #ffb6d9 25%, #ffe0f0 50%, #ffc9e8 75%, #ffd1e8 100%);
+  background: linear-gradient(135deg, #ffb6d9 0%, #ff8fc7 25%, #ffd3ea 50%, #ff9fd0 75%, #ffb6d9 100%);
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
   font-family: 'Baloo 2', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 body.theme-barbie .password-gate {
-  background: linear-gradient(135deg, #ffd1e8 0%, #ffb6d9 25%, #ffe0f0 50%, #ffc9e8 75%, #ffd1e8 100%);
+  background: linear-gradient(135deg, #ffb6d9 0%, #ff8fc7 25%, #ffd3ea 50%, #ff9fd0 75%, #ffb6d9 100%);
   background-size: 400% 400%;
 }
 
@@ -1099,16 +1101,105 @@ body.theme-barbie button {
   font-weight: 700;
 }
 
+body.theme-barbie h2,
+body.theme-barbie h3 {
+  color: var(--color-primary-dark);
+}
+
+body.theme-barbie .header {
+  background: linear-gradient(135deg, rgba(255, 105, 180, 0.4), rgba(255, 182, 213, 0.3));
+  border-bottom: 2px solid rgba(255, 20, 147, 0.3);
+}
+
+body.theme-barbie .header button,
+body.theme-barbie .cabinet-button-js,
+body.theme-barbie .subarea-button-js,
+body.theme-barbie .shelf-button-js,
+body.theme-barbie .shelf-category-js,
+body.theme-barbie .nested-shelf-button-js,
+body.theme-barbie .toggle-button,
+body.theme-barbie .theme-option,
+body.theme-barbie .close-button,
+body.theme-barbie .quantity-controls button {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.15) 50%, transparent 60%);
+  box-shadow: 0 4px 12px rgba(255, 20, 147, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  color: var(--color-primary-dark);
+}
+
+body.theme-barbie .header button:hover:not(:disabled),
+body.theme-barbie .cabinet-button-js:hover,
+body.theme-barbie .subarea-button-js:hover,
+body.theme-barbie .shelf-button-js:hover,
+body.theme-barbie .shelf-category-js:hover,
+body.theme-barbie .nested-shelf-button-js:hover,
+body.theme-barbie .toggle-button:hover,
+body.theme-barbie .theme-option:hover {
+  background-color: var(--color-primary) !important;
+  color: #fff !important;
+  transform: translateY(-2px) scale(1.03);
+}
+
 body.theme-barbie #backBtn {
-  background: var(--color-accent);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 60%), var(--color-accent) !important;
+  color: var(--color-primary-dark) !important;
+}
+
+body.theme-barbie .map-cell {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: var(--shadow), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+body.theme-barbie .map-cell:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: var(--shadow-lg), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+body.theme-barbie #content-area,
+body.theme-barbie .modal-content,
+body.theme-barbie .theme-menu,
+body.theme-barbie .password-gate-card,
+body.theme-barbie .equipment-item {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow-lg), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+body.theme-barbie .success-btn,
+body.theme-barbie .restore-item,
+body.theme-barbie #addEquipmentForm > button[type="submit"],
+body.theme-barbie .password-gate-card button[type="submit"],
+body.theme-barbie .sign-in-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 55%), linear-gradient(135deg, #5fe8d4, var(--color-success-dark)) !important;
+  box-shadow: 0 4px 12px rgba(0, 194, 168, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+body.theme-barbie .danger-btn,
+body.theme-barbie .delete-item {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 55%), linear-gradient(135deg, #ff8fa3, var(--color-danger-dark)) !important;
+  box-shadow: 0 4px 12px rgba(201, 24, 74, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.7);
 }
 
 body.theme-barbie .archive-item {
-  background: linear-gradient(135deg, var(--color-accent), #ff8a00);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 55%), linear-gradient(135deg, var(--color-accent), #ff8a00) !important;
+  box-shadow: 0 4px 12px rgba(255, 138, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+body.theme-barbie .search-container button {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 55%), linear-gradient(135deg, #ff6fb3, var(--color-primary-dark)) !important;
+  box-shadow: 0 4px 12px rgba(255, 20, 147, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+body.theme-barbie .quantity-controls input,
+body.theme-barbie .form-group select,
+body.theme-barbie .form-group input,
+body.theme-barbie .search-container input {
+  border: 1px solid rgba(255, 20, 147, 0.3) !important;
+  box-shadow: inset 0 1px 3px rgba(255, 20, 147, 0.12);
 }
 
 body.theme-barbie ::selection {
-  background: rgba(255, 20, 147, 0.25);
+  background: rgba(255, 20, 147, 0.3);
 }
 
 body.theme-barbie ::-webkit-scrollbar-thumb {
