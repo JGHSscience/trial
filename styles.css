@@ -1088,6 +1088,10 @@ body.theme-barbie {
   font-family: 'Baloo 2', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+body.theme-barbie, body.theme-barbie * {
+  cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAxUlEQVR4nO2VsRHCMAxFvznmSM8O9C6AQWCCjMAEMIihoE9mcM8iny4XcrnEthC+gF9tS9/SlwwUCoUlw+ON0hiroEQepIc42RjrkENmA6ORHAisgCZJLxv23lz3yRWKvviW/LIDTneRkOwVyO4BEWN7QGtc1YKL55vOdqLM4REdL7sHxAL6r27qSq//IdBZxor4+I6ns2xbDwDYnp+z8bN7QAU6y5R2qAiZE6H2z/dFTHniNz0wZFGe+ApNXXVC/sMDU7wAK0laaNmLbjUAAAAASUVORK5CYII=') 16 8, auto !important;
+}
+
 body.theme-barbie .password-gate {
   background: linear-gradient(135deg, #ffb6d9 0%, #ff8fc7 25%, #ffd3ea 50%, #ff9fd0 75%, #ffb6d9 100%);
   background-size: 400% 400%;
@@ -1273,4 +1277,20 @@ body.theme-barbie .barbie-effects-layer {
   .barbie-bee {
     font-size: 1.2rem;
   }
+}
+
+.barbie-trail-sparkle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, var(--barbie-trail-color, #ff69b4) 55%, transparent 100%);
+  animation: barbieTrailFade 0.7s ease-out forwards;
+}
+
+@keyframes barbieTrailFade {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.2) translateY(-14px); }
 }
