@@ -37,17 +37,66 @@ const practicalsSearchBtn = document.getElementById('searchPracticalsBtn');
 const themeMenu = document.getElementById('themeMenu');
 
 const THEME_KEY = 'labInventoryTheme';
-const THEME_CLASSES = ['theme-dark', 'theme-gecko'];
+const THEME_CLASSES = ['theme-dark', 'theme-gecko', 'theme-barbie'];
+const barbieEffectsLayer = document.getElementById('barbieEffectsLayer');
+
+function renderBarbieEffects() {
+    if (!barbieEffectsLayer) return;
+    barbieEffectsLayer.innerHTML = '';
+
+    const beeEmoji = ['🐝', '🐝', '🐝'];
+    for (let i = 0; i < 8; i++) {
+        const el = document.createElement('span');
+        el.className = 'barbie-bee';
+        el.textContent = beeEmoji[i % beeEmoji.length];
+        const flyDuration = 12 + Math.random() * 9;
+        const flutterDuration = 0.5 + Math.random() * 0.4;
+        const delay = Math.random() * flyDuration;
+        const topStart = 12 + Math.random() * 82;
+        el.style.top = `${topStart}%`;
+        el.style.fontSize = `${1.5 + Math.random() * 0.9}rem`;
+        el.style.opacity = '1';
+        el.style.animationDuration = `${flutterDuration}s, ${flyDuration}s`;
+        el.style.animationDelay = `${-delay}s, ${-delay}s`;
+        barbieEffectsLayer.appendChild(el);
+    }
+
+    const sparkleEmoji = ['✨', '⭐', '💖'];
+    for (let i = 0; i < 22; i++) {
+        const el = document.createElement('span');
+        el.className = 'barbie-sparkle';
+        el.textContent = sparkleEmoji[Math.floor(Math.random() * sparkleEmoji.length)];
+        const duration = 3.5 + Math.random() * 4.5;
+        const delay = Math.random() * duration;
+        el.style.left = `${Math.random() * 100}%`;
+        el.style.top = `${15 + Math.random() * 75}%`;
+        el.style.fontSize = `${0.8 + Math.random() * 0.9}rem`;
+        el.style.animationDuration = `${duration}s`;
+        el.style.animationDelay = `${-delay}s`;
+        barbieEffectsLayer.appendChild(el);
+    }
+}
+
+function clearBarbieEffects() {
+    if (barbieEffectsLayer) {
+        barbieEffectsLayer.innerHTML = '';
+    }
+}
 
 function applyTheme(theme) {
     document.body.classList.remove(...THEME_CLASSES);
-    if (theme === 'dark' || theme === 'gecko') {
+    if (THEME_CLASSES.includes(`theme-${theme}`)) {
         document.body.classList.add(`theme-${theme}`);
     }
     document.querySelectorAll('.theme-option').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.theme === theme);
     });
     localStorage.setItem(THEME_KEY, theme);
+    if (theme === 'barbie') {
+        renderBarbieEffects();
+    } else {
+        clearBarbieEffects();
+    }
 }
 
 applyTheme(localStorage.getItem(THEME_KEY) || 'light');
@@ -518,7 +567,7 @@ let allPracticals = [
     { id: 254, title: 'N5 Life on Earth LE5 Activity 5 COP26 Activity 2', subject: 'Biology', level: 'N4/N5', topic: 'Life on Earth', isRevision: false, items: [{ name: 'Debate Cards', qty: '1 per group', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
     { id: 255, title: 'N5 Life on Earth LE5 Activity 4 COP26 Activity 1', subject: 'Biology', level: 'N4/N5', topic: 'Life on Earth', isRevision: false, items: [{ name: 'Poster paper', qty: '20 items total', location: null }, { name: 'Living Planet Report 2020', qty: '1 items total', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
     { id: 256, title: 'N5 Life on Earth LE1 Ecosystems Activity 5 Ecosystems in a box', subject: 'Biology', level: 'N4/N5', topic: 'Life on Earth', isRevision: false, items: [{ name: 'paint and paint brushes', qty: '5 items total', location: null }, { name: 'Cardboard Boxes ( Give Tech notice for collection or Pupils bring in their own box)', qty: '10 items total', location: null }, { name: 'Plasticine ( Various Colours)', qty: '6 items total', location: null }, { name: 'Tissue paper/Crepe Paper', qty: '1 boxes total', location: null }, { name: 'Pipe Cleaners', qty: '20 items total', location: null }, { name: 'Paper Straws', qty: '20 items total', location: null }, { name: 'Glue ( PVA)', qty: '5 items total', location: null }, { name: 'Sellotape', qty: '10 items total', location: null }, { name: 'Coloured Paper and Card', qty: '10 items total', location: null }, { name: 'White Paper and Card', qty: '10 items total', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
-    { id: 257, title: 'CfE Higher Biology Unit Sustainability and Interdependence Activity 3 pGLO Kit Bacterial Transformation ( Kit needs to be ordered 4/6 weeks notice)', subject: 'Biology', level: 'Higher', topic: 'CfE Higher Biology Unit Sustainability and Interdependence Activity', isRevision: false, items: [], generalNotes: '', technicianNotes: 'https://www.bio-rad.com/en-uk/product/pglo-bacterial-transformation-kit?ID=619b8f74-9d3f-4c2f-a795-8a27e67598b7', riskAssessmentNotes: '', exam: false },
+    { id: 257, title: 'CfE Higher Biology Unit Sustainability and Interdependence Activity 3 pGLO Kit Bacterial Transformation ( Kit needs to be ordered 4/6 weeks notice)', subject: 'Biology', level: 'Higher', topic: 'Unit 3', isRevision: false, items: [], generalNotes: '', technicianNotes: 'https://www.bio-rad.com/en-uk/product/pglo-bacterial-transformation-kit?ID=619b8f74-9d3f-4c2f-a795-8a27e67598b7', riskAssessmentNotes: '', exam: false },
     { id: 258, title: 'CfE Higher Biology Unit 3 Sustainability and Interdependence Activity 1 Extraction and Separation of leaf pigments by paper Activity', subject: 'Biology', level: 'Higher', topic: 'Unit 3', isRevision: false, items: [{ name: 'Part 2: Capillary Tubes', qty: '10 items total', location: { label: 'Preproom - Chemistry - Chemistry Column 06', nav: { type: 'cabinet', parent: 'Preproom', mainArea: 'Chemistry', cabinet: 'Chemistry Column 06' } } }, { name: 'Part 2: Pencils', qty: '10 items total', location: null }, { name: 'Part 2: Rulers (In lab)', qty: '10 items total', location: null }, { name: 'Part 2: Scissors (In lab)', qty: '10 items total', location: null }, { name: 'Part 2: 10cm Strips of Chromatography Paper', qty: '1 per group', location: null }, { name: 'Part 2: 100cm3 Measuring Cylinders and Stoppers', qty: '10 items total', location: null }, { name: 'Part 2: 100cm3 Chroamtography Solvent ( 100mls Petroleum Ether/12mls Propanone)', qty: '4 items total', location: null }, { name: 'Part 2: Green Filtrate from Part 1', qty: '10 items total', location: null }, { name: 'Part 2: Hairdryer', qty: '5 items total', location: null }, { name: 'Part 1: Mortar and Pestle', qty: '10 items total', location: { label: 'Preproom - Biology - Biology Column 05', nav: { type: 'cabinet', parent: 'Preproom', mainArea: 'Biology', cabinet: 'Biology Column 05' } } }, { name: 'Part 1: Silver Sand', qty: '5 items total', location: { label: 'Preproom - Biology - Biology Column 05', nav: { type: 'cabinet', parent: 'Preproom', mainArea: 'Biology', cabinet: 'Biology Column 05' } } }, { name: 'Part 1: Filter Funnels', qty: '1 per group', location: null }, { name: 'Part 1: Filter paper', qty: '1 boxes total', location: null }, { name: 'Part 1: 100cm3 Beakers', qty: '10 items total', location: null }, { name: 'Part 1: 20cm3 measuring Cylinders', qty: '10 items total', location: null }, { name: 'Part 1: Spatulas', qty: '10 items total', location: null }, { name: 'Part 1: 100cm3 Bottles of Propanone', qty: '4 items total', location: null }, { name: 'Part 1: Geranium Plant', qty: '2 items total', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
     { id: 259, title: 'N5 Fractional Distillation Chem', subject: 'Chemistry', level: 'N4/N5', topic: 'General', isRevision: false, items: [{ name: 'Mini bunsen or candle', qty: '1 per group', location: null }, { name: 'U tubes connected to water pump + lime water + cobalt chloride paper', qty: '1 per group', location: { label: 'Preproom - Chemistry - Chemistry Column 04', nav: { type: 'cabinet', parent: 'Preproom', mainArea: 'Chemistry', cabinet: 'Chemistry Column 04' } } }], generalNotes: '', technicianNotes: 'Tray 28', riskAssessmentNotes: '', exam: false },
     { id: 260, title: 'CfE Higher Biology Unit 2 Metabolism and Survival Activity 4 - Investigating the Effect of L-dopa substrate on the rate of the reaction  the Enzyme Dopa Oxidase', subject: 'Biology', level: 'Higher', topic: 'Unit 2', isRevision: false, items: [{ name: 'Droppers', qty: '20 total', location: null }, { name: 'Marker Pens', qty: '10 total', location: null }, { name: '1ml syringe', qty: '10 total', location: { label: 'Preproom - Biology - Biology Column 01', nav: { type: 'cabinet', parent: 'Preproom', mainArea: 'Biology', cabinet: 'Biology Column 01' } } }, { name: 'Bananas', qty: '2 items total', location: null }, { name: 'White Tiles', qty: '10 items total', location: null }, { name: 'Pestle and Mortar', qty: '10 items total', location: { label: 'Preproom - Biology - Biology Column 05', nav: { type: 'cabinet', parent: 'Preproom', mainArea: 'Biology', cabinet: 'Biology Column 05' } } }, { name: '100cm3 Distilled Water', qty: '4 items total', location: null }, { name: '10cm2 Muslin Squares', qty: '10 items total', location: null }, { name: '10cm3 Measuring Cylinders', qty: '20 items total', location: null }, { name: '50cm3 Bottles of 15mM L-dopa (Stock Solution)', qty: '5 items total', location: null }, { name: '20cm3 Phosphate Buffer pH7', qty: '4 items total', location: { label: 'Preproom - Chemical Store - Shelves - General Chemical Store', nav: { type: 'shelf', parent: 'Preproom', subArea: 'Chemical Store', shelfName: 'General Chemical Store' } } }, { name: 'Stopwatch', qty: '10 items total', location: null }, { name: 'Cuvettes', qty: '50 items total', location: { label: 'Preproom - Biology - Biology Column 14', nav: { type: 'cabinet', parent: 'Preproom', mainArea: 'Biology', cabinet: 'Biology Column 14' } } }, { name: 'Mystrica Colorimeters', qty: '4 items total', location: { label: 'Preproom - Biology - Biology Column 16', nav: { type: 'cabinet', parent: 'Preproom', mainArea: 'Biology', cabinet: 'Biology Column 16' } } }, { name: 'Labcoats', qty: '20 items total', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
@@ -537,7 +586,7 @@ let allPracticals = [
     { id: 273, title: 'CfE Higher Biology Unit 1 DNA and the Genome Activity 6 Paper Clip PCR (5 Groups)', subject: 'Biology', level: 'Higher', topic: 'Unit 1', isRevision: false, items: [{ name: 'Bag of 25 Blue Paper Clips (Labelled A)', qty: '1 per group', location: null }, { name: 'Bag of 25 Red Paper Clips (Labelled T)', qty: '5 items total', location: null }, { name: 'Bag of 25 Green Paper Clips ( Labelled G)', qty: '5 items total', location: null }, { name: 'Bag of 25 Yellow Paper Clips (Labelled C)', qty: '5 items total', location: null }, { name: 'Bag of 6 white Paper Clips', qty: '5 items total', location: null }, { name: 'Laminated Instructions fro Paper Clip PCR Activity', qty: '10 items total', location: null }], generalNotes: 'http://www.sfi.mtu.edu/RET/Co ury/Lesson3DetectingGMFoodsByPCR/paperclip.pdf', technicianNotes: '', riskAssessmentNotes: '', exam: false },
     { id: 274, title: 'CfE Higher Biology Unit 1 DNA and the Genome Activity 4  Extraction of Pea DNA', subject: 'Biology', level: 'Higher', topic: 'Unit 1', isRevision: false, items: [{ name: 'Permanent markers', qty: '5 total', location: null }, { name: 'Clean droppers', qty: '10 total', location: null }, { name: '400g Frozen Peas', qty: '1 items total', location: null }, { name: '100cm3 Washing up Liquid in small bottles', qty: '6 items total', location: null }, { name: '3% salt solution in small bottles', qty: '6 items total', location: null }, { name: 'Mortar and Pestle', qty: '10 items total', location: { label: 'Preproom - Biology - Biology Column 05', nav: { type: 'cabinet', parent: 'Preproom', mainArea: 'Biology', cabinet: 'Biology Column 05' } } }, { name: '100cm3 Bottles of Iced Cold Ethanol (Kept in the Freezer)', qty: '6 items total', location: null }, { name: 'Squish bottles of distilled water', qty: '6 containers total', location: null }, { name: 'Protease, bacterial Enzyme', qty: '1 items total', location: { label: 'Preproom - Chemical Store - Shelves - Academy Lab Fridge', nav: { type: 'shelf', parent: 'Preproom', subArea: 'Chemical Store', shelfName: 'Academy Lab Fridge' } } }, { name: 'Filter Paper', qty: '1 boxes total', location: null }, { name: 'Waterbath 60 degrees', qty: '1 items total', location: null }, { name: 'Big plastic tubs for ice bath', qty: '4 items total', location: null }, { name: '10ml measuring cylinders', qty: '10 items total', location: null }, { name: '100ml Measuring Cylinders', qty: '10 items total', location: null }, { name: 'Inoculating Loops', qty: '10 items total', location: null }, { name: 'Laminated Activity Cards', qty: '20 items total', location: null }, { name: 'Ice for ice baths', qty: '4 items total', location: null }], generalNotes: 'http://www.nuffieldfoundation.org/practical-biology/extracting-dna-living-things', technicianNotes: '', riskAssessmentNotes: '', exam: false },
     { id: 275, title: 'CfE Higher Biology Unit 1 DNA and the Genome Activity 1b  DNA Dominoes', subject: 'Biology', level: 'Higher', topic: 'Unit 1', isRevision: false, items: [{ name: 'Laminated Set of Cards', qty: '10 items total', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
-    { id: 276, title: 'CfE Higher Biology Unit 1a DNA and the Genome Activity 1 Discovery of DNA Research Task', subject: 'Biology', level: 'Higher', topic: 'CfE Higher Biology Unit', isRevision: false, items: [{ name: 'Laminated Activity Cards', qty: '20 items total', location: null }, { name: 'A3 Paper', qty: '10 items total', location: null }, { name: 'IT Needed', qty: '10 items total', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
+    { id: 276, title: 'CfE Higher Biology Unit 1a DNA and the Genome Activity 1 Discovery of DNA Research Task', subject: 'Biology', level: 'Higher', topic: 'Unit 1', isRevision: false, items: [{ name: 'Laminated Activity Cards', qty: '20 items total', location: null }, { name: 'A3 Paper', qty: '10 items total', location: null }, { name: 'IT Needed', qty: '10 items total', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
     { id: 277, title: 'N5 Multicellular Organisms MO7 Absorption of Materials Activity 3 Peristalsis Models', subject: 'Biology', level: 'N4/N5', topic: 'Multicellular Organisms', isRevision: false, items: [{ name: 'Peristalsis Model Kits (10 beads or Marbles/Rubber Tubing)', qty: '10 items total', location: null }, { name: 'Dropping Bottles of Detergent', qty: '10 items total', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
     { id: 278, title: 'N5 Multicellular Organisms MO7 Absorption of Materials Activity 2 Model Gut Experiment', subject: 'Biology', level: 'N4/N5', topic: 'Multicellular Organisms', isRevision: false, items: [{ name: 'Visking Tubing', qty: '10 items total', location: null }, { name: '100cm3 bottles of 5% Starch Solution', qty: '10 items total', location: null }, { name: '100cm3 bottles 1% Amylase', qty: '10 items total', location: null }, { name: '10cm3 Syringes', qty: '10 items total', location: null }, { name: 'Dropping Bottles of Benedicts Solution', qty: '10 items total', location: null }, { name: 'Dropping Bottles of Iodine Solution', qty: '10 items total', location: null }, { name: 'Dimple Trays', qty: '10 items total', location: null }, { name: 'Droppers', qty: '10 items total', location: null }, { name: 'Water Bath 100 degrees ( or Kettle)', qty: '1 items total', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
     { id: 279, title: 'N5 Multicellular Organisms MO7 Absorption of Materials Activity 1 Mammalian Lungs Dissection Demo', subject: 'Biology', level: 'N4/N5', topic: 'Multicellular Organisms', isRevision: false, items: [{ name: 'Sheep Lungs', qty: '1 per group', location: null }, { name: 'Scalpels', qty: '1 items total', location: null }, { name: 'Forceps', qty: '1 items total', location: null }, { name: 'Dissecting Scissors', qty: '1 items total', location: null }, { name: 'Dissecting Board', qty: '1 items total', location: null }, { name: 'Gloves', qty: '10 pairs total', location: null }, { name: '1 Lab Coats (Teacher) /Class set of Plastic Aprons', qty: '1 items total', location: null }, { name: '250cm3 Bottle of Disinfectant', qty: '1 items total', location: null }, { name: 'Lung Model', qty: '1 items total', location: null }, { name: 'Air Pump', qty: '1 items total', location: null }], generalNotes: '', technicianNotes: '', riskAssessmentNotes: '', exam: false },
