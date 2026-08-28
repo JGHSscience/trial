@@ -83,6 +83,35 @@ function clearBarbieEffects() {
     }
 }
 
+const BARBIE_TRAIL_COLORS = ['#ff69b4', '#ffd23f', '#ff1493', '#ffffff'];
+let lastBarbieTrailTime = 0;
+
+function spawnBarbieTrailSparkle(x, y) {
+    const particleCount = 2;
+    for (let i = 0; i < particleCount; i++) {
+        const el = document.createElement('span');
+        el.className = 'barbie-trail-sparkle';
+        const size = 3 + Math.random() * 4;
+        const offsetX = (Math.random() - 0.5) * 14;
+        const offsetY = (Math.random() - 0.5) * 14;
+        el.style.width = `${size}px`;
+        el.style.height = `${size}px`;
+        el.style.setProperty('--barbie-trail-color', BARBIE_TRAIL_COLORS[Math.floor(Math.random() * BARBIE_TRAIL_COLORS.length)]);
+        el.style.left = `${x + offsetX}px`;
+        el.style.top = `${y + offsetY}px`;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 750);
+    }
+}
+
+document.addEventListener('mousemove', (event) => {
+    if (!document.body.classList.contains('theme-barbie')) return;
+    const now = Date.now();
+    if (now - lastBarbieTrailTime < 45) return;
+    lastBarbieTrailTime = now;
+    spawnBarbieTrailSparkle(event.clientX, event.clientY);
+});
+
 function applyTheme(theme) {
     document.body.classList.remove(...THEME_CLASSES);
     if (THEME_CLASSES.includes(`theme-${theme}`)) {
