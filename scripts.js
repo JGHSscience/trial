@@ -1217,6 +1217,7 @@ let archivedEquipment = [];
 
 function showContent(title, html) {
     contentArea.innerHTML = `<h2>${title}</h2>${html}`;
+    mapDiv.style.display = 'none';
     practicalsGrid.style.display = 'none';
     practicalsGrid.innerHTML = '';
 }
