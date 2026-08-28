@@ -1247,10 +1247,9 @@ function goBack() {
 function updateButtonVisibility() {
     const currentState = navigationStack[navigationStack.length - 1];
     const isSearchOrArchive = currentState && (currentState.type === 'search' || currentState.type === 'archive');
-    const isPracticalsState = currentState && typeof currentState.type === 'string' && currentState.type.startsWith('practicals');
     searchBtn.classList.toggle('hidden', isSearchOrArchive);
     addEquipmentBtn.classList.toggle('hidden', isSearchOrArchive);
-    mapBtn.classList.toggle('hidden', (currentState && currentState.type === 'map') || isPracticalsState);
+    mapBtn.classList.toggle('hidden', currentState && currentState.type === 'map');
     archiveBtn.classList.toggle('hidden', currentState && currentState.type === 'archive');
     practicalsSearchBtn.classList.toggle('hidden', currentState && currentState.type === 'practicals-search');
 }
