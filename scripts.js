@@ -4,6 +4,7 @@ const mapBtn = document.getElementById('mapBtn');
 const archiveBtn = document.getElementById('archiveBtn');
 const addEquipmentBtn = document.getElementById('addEquipmentBtn');
 const contentArea = document.getElementById('content-area');
+const containerEl = document.getElementById('container');
 const mapDiv = document.getElementById('map');
 const practicalsGrid = document.getElementById('practicalsGrid');
 const addEquipmentModal = document.getElementById('addEquipmentModal');
@@ -1316,6 +1317,7 @@ function showWelcome() {
     navigationStack = [{ type: 'map' }];
     backBtn.disabled = true;
     updateButtonVisibility();
+    attachDynamicEventListeners();
 }
 
 function showMap() {
@@ -1781,10 +1783,10 @@ function showConfirmationModal(title, message, confirmCallback) {
 }
 
 function attachDynamicEventListeners() {
-    contentArea.removeEventListener('click', handleDynamicClick);
-    contentArea.addEventListener('click', handleDynamicClick);
-    contentArea.removeEventListener('change', handleQuantityChange);
-    contentArea.addEventListener('change', handleQuantityChange);
+    containerEl.removeEventListener('click', handleDynamicClick);
+    containerEl.addEventListener('click', handleDynamicClick);
+    containerEl.removeEventListener('change', handleQuantityChange);
+    containerEl.addEventListener('change', handleQuantityChange);
 }
 
 function handleDynamicClick(event) {
@@ -2317,12 +2319,6 @@ document.addEventListener('DOMContentLoaded', () => {
             signInBtn.classList.add('hidden');
             await loadFromSheet();
             startPolling();
-        }
-    });
-    mapDiv.addEventListener('click', (event) => {
-        const cell = event.target.closest('.map-cell');
-        if (cell) {
-            handleAreaSelection(cell.dataset.area);
         }
     });
 
