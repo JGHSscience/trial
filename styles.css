@@ -1253,13 +1253,13 @@ body.theme-barbie .barbie-effects-layer {
 }
 
 @keyframes barbieFlyAcross {
-  0% { transform: translateX(0) translateY(0); }
-  15% { transform: translateX(18vw) translateY(-4vh); }
-  30% { transform: translateX(36vw) translateY(3vh); }
+  100% { transform: translateX(0) translateY(0); }
+  75% { transform: translateX(18vw) translateY(-4vh); }
+  60% { transform: translateX(36vw) translateY(3vh); }
   45% { transform: translateX(54vw) translateY(-5vh); }
-  60% { transform: translateX(72vw) translateY(4vh); }
-  75% { transform: translateX(90vw) translateY(-3vh); }
-  100% { transform: translateX(120vw) translateY(2vh); }
+  30% { transform: translateX(72vw) translateY(4vh); }
+  15% { transform: translateX(90vw) translateY(-3vh); }
+  0% { transform: translateX(120vw) translateY(2vh); }
 }
 
 @keyframes barbieBuzz {
